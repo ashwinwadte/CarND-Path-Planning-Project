@@ -110,6 +110,21 @@ Please (do your best to) stick to [Google's C++ style guide](https://google.gith
 Note: regardless of the changes you make, your project must be buildable using
 cmake and make!
 
+#### Screenshot of successful run of the project
+
+![simulation screenshot](./output_path_planning.png)
+
+#### Spline Interpolation
+I used Spline library for this. If the previous path is empty, car data is used as starting point, else the two last points are used as reference.
+
+#### Points creation
+Firstly to creat points, I set the x target position (30 meters ahead). Then the y position is calculated through the spline, after this the overall distance from the target position (x, y) is calculated by mean of euclidean distance. At this stage, the number of missing points is used in the for-loop for the point creation that are now attached once they are converted back to global coordinates.
+
+#### Identification of other cars
+Here, the perception phase was performed. For each car in the list coming from the sensor fusion, the lane for the car detected is calculated taking into account lane width (4 meters). Based on the i-th car lane and the distance from our car, boolean variables that are used in the behavior planning are set.
+
+#### Behavior Planning
+Now, a simple behavior planning is implemented. According to the detected car, a lane change is performed if there is a free lane (the boolean previously set are used here). Here, velocity is taken into account. If there are no lanes free and a slower car is in the front, the velocity is decreased. Likewise, if there are no car in front of us, the vehicle accelerates.
 
 ## Call for IDE Profiles Pull Requests
 
